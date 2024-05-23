@@ -1,0 +1,62 @@
+Cache:
+
+Main Purpose
+	To access frequently used data(db data or computed data)
+
+Why can’t I cache all data in db directly while starting the application?
+- [ ] Memory becomes costly
+- [ ] Since its stored in your web server, server becomes slow
+- [ ] Since cache is big, searching time again makes time consuming
+
+What if my cache size is small?
+- [ ] If cache size is very small then more frequently I will evict and add new data.. in some time the new data which we added also evicted to add some other data
+- [ ] Above thing is called as trashing
+
+So, we should choose more accurate size for a cache and avoid unnecessary things to be cached.
+
+
+Map vs Cache
+Map doesn’t have eviction policy
+
+
+Types pf Cache
+- [ ] Spatial Locality 
+- [ ] Temporal Locality
+- [ ] Global
+
+Eg;
+for (int i = 0; i < 100; i++) {
+  sum += array[i];
+}
+* Spatial Locality: In this loop, the program iterates through the array, accessing elements one after another. This means it accesses memory locations with increasing addresses. The cache, aware of spatial locality, might preload nearby elements of the array into the cache when it fetches the first element, anticipating access to subsequent elements.
+* Temporal Locality: The loop variable i and the array element array[i] are accessed repeatedly within the loop. This exhibits temporal locality because the same data is being used multiple times in a short span. The cache, recognizing this pattern, would likely keep the recently accessed value of i and the corresponding array element in the cache for faster access in subsequent iterations. This is normal caching technique
+* Global: Cache will be stored in a global place. Eg: Redis 
+
+Cache Invalidation:
+If a value in cache need to be updated, then it should be invalidated
+
+Cache Eviction:
+If cache reaches it threshold size and new key is trying be added, then old one need to be evicted
+	
+Cache Expiration:
+After certain time cache will be expired.
+
+Types of eviction policy:
+LRU - Least recently used (evicts only one)
+LFU - Least frequently used (evicts less frequently used)
+
+
+Read and write patterns
+Read
+1. Read aside: Client read  req—> server —> cache 
+						    	—> DB
+
+2. Read Through: Client read  req—> server —> cache  —> DB
+
+Write
+1. Write Through: Client write  req—> server —> DB —> cache —> server —> response
+
+2. Write Through: Client write  req—> server —> cache  —> DB
+
+
+						   
