@@ -1,0 +1,23 @@
+{
+  "name": "import-map-mf-app",
+  "private": true,
+  "scripts": {
+    "start": "npm-run-all -p start:*",
+    "start:internal": "cd internal-user-app && npm start",
+    "start:external": "cd external-user-app && npm start",
+    "start:root": "cd root-app && npm start",
+    "build": "npm-run-all build:*",
+    "build:internal": "cd internal-user-app && npm run build",
+    "build:external": "cd external-user-app && npm run build",
+    "build:root": "cd root-app && npm run build",
+    "test": "npm-run-all test:*",
+    "test:internal": "cd internal-user-app && npm test",
+    "test:external": "cd external-user-app && npm test",
+    "test:root": "cd root-app && npm test"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "react": "https://cdn.skypack.dev/react",
+    "react-dom": "https://cdn.skypack.dev/react-dom",
+    "react-router-dom": "https://cdn.skypack.dev/react-router-dom@6.4.3",
+    "lodash": "https://cdn.skypack.dev/lodash-es/"
+  }
+}

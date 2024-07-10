@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "react": "https://cdn.skypack.dev/react",
+    "react-dom": "https://cdn.skypack.dev/react-dom",
+    "react-router-dom": "https://cdn.skypack.dev/react-router-dom@6.4.3",
+    "@single-spa/welcome": "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js",
+    "@external/external-user-app": "http://localhost:8080/external-external-user-app.js",
+    "@internal/internal-user-app": "http://localhost:8081/internal-internal-user-app.js",
+    "@root/root-config": "http://localhost:9000/root-root-config.js"
+  }
+}
