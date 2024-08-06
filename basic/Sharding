@@ -1,0 +1,24 @@
+Sharding
+
+Sharding is the process of Partitioning a large dataset into multiple smaller shards and distributing them across different servers. NoSql inbuilt having sharding feature since it has partition id but in SQL we can achieve by some complex workaround
+
+Shard: partitioned dataset present in a server is shard. Also each shard can be horizontally scaled.
+
+Partition ID
+It is a unique identifier used to map data to a specific shard. So each shard has a partition id.
+
+How to achieve sharding
+
+Generally, based on a specific column (e.g., user ID, timestamp) create a shard. So userId from 1 to 10000 can be present in on shard and 10000 to 20000 can be present in another shard as per our need.
+
+Other general types of sharding:
+Range-Based Sharding: Divide data into shards based on a continuous range of values (e.g., user IDs 1-1000, 1001-2000, etc.)
+Hash-Based Sharding: Use a hash function to map data to shards (e.g., user ID modulo 10)
+Geo-Sharding: Divide data into shards based on geographic locations (e.g., country, region, city)
+
+Challenges:
+Joins in sharded data can be challenging because of data distribution in different shards
+
+Credit point:
+What if you want to get list of users above age 50 present in Chennai?
+Ans: Shard based on city and index based on age. This will makes the search more efficient
