@@ -14,6 +14,7 @@ Generally, based on a specific column (e.g., user ID, timestamp) create a shard.
 Sharding with index:
 Sharding splits the index: Divide the index into shards, distributing them across nodes. 
 For Eg: we are using range based sharding, the index created will be in ascending order lets say from 1-2000. so we may have two shards based on the index created : 1-1000 in one shard and 1001 - 2000 in another shard.
+So whenever I search based on index...since we know that range, the search will go to particular shard and provides the data.
 
 Other general types of sharding:
 Range-Based Sharding: Divide data into shards based on a continuous range of values (e.g., user IDs 1-1000, 1001-2000, etc.)
