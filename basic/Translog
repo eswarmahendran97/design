@@ -1,0 +1,30 @@
+Translog
+
+
+
+A  TransLog typically records changes made to data through various operations, including:
+1. **Insertions**: Creating new data
+2. **Updates**: Modifying existing data
+3. **Deletions**: Removing data
+
+
+In most cases, a TransLog is designed to capture all three types of operations:
+* When data is inserted (e.g., creating a new record), the TransLog logs the creation event.
+* When data is updated (e.g., modifying an existing record), the TransLog logs the update event, which typically includes information about the original value and the new value.
+
+But in general, a TransLog is designed to record all types of changes made to data through various operations.
+
+
+TransLog entries are segregated on a table-wise basis. This means that each table (or entity) has its own separate TransLog, which records changes made to that specific table.
+This segregation is usually achieved through the use of triggers or stored procedures that write Log entries to a corresponding Log table for each affected table. For example:
+
+* When data is inserted into Table A, a trigger writes an entry to the `TableA_Log` table.
+* When data is updated in Table B, a trigger writes an entry to the `TableB_Log` table.
+
+Using a separate Log table for each affected table still has advantages: on performing your own operation on changes made to data through various operations.
+
+
+To view the data in the SQL Server Transaction Log:
+Microsoft SQL Server (MSSQL) does not have a built-in TransLog table by default.
+However, you can use the **SQL Server Transaction Log** to track changes made to your database. The transaction log is a separate log file that stores a record of all transactions that have been committed to the database. This 
+The transaction log files themselves are binary and not meant to be directly read. It's designed for internal database operations, not for direct user queries.
