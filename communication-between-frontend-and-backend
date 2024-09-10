@@ -1,0 +1,51 @@
+Communication between Frontend and Backend
+
+Proxy Server
+
+To establish API communication between your React frontend, Fastify or Express  proxy layer, and Java Spring Boot backend, you'll want to set up a flow like this:
+1. React Frontend → Fastify or Express Proxy → Spring Boot Backend
+Here's a brief overview of how this can work:
+1. React Frontend:
+    * Make API calls to your Fastify or Express  proxy server instead of directly to the Spring Boot backend.
+    * Use libraries like Axios or the built-in fetch API to make HTTP requests.
+2. Fastify or Express Proxy:
+    * Set up routes that correspond to your backend API endpoints.
+    * Forward requests from the frontend to the appropriate Spring Boot endpoints.
+    * Handle any necessary authentication, logging, or request modification.
+3. Spring Boot Backend:
+    * Expose REST API endpoints that the Fastify or Express proxy can communicate with.
+    * Process requests and send responses back through the proxy to the frontend.
+
+
+This setup allows you to:
+* Keep your backend URL hidden from the frontend
+* Implement additional security measures in the proxy
+* Potentially cache responses or implement rate limiting at the proxy level
+
+
+API Gateway
+
+API Gateway (like Azure API Management or Azure Application Gateway) will typically provide a different URL from your backend service url. The API Gateway serves as an intermediary layer between your frontend and backend services and offers several benefits,
+
+API Gateway handles:
+* Security: API Gateways typically provide robust security features like authentication, authorization, and rate limiting.
+* Routing: API Gateways can route requests to multiple backend services.
+* Caching: API Gateways often include caching mechanisms to improve performance.
+* Logging and monitoring: API Gateways usually provide logging and monitoring capabilities.
+
+Note: In Api gateway we will configure map our backend service endpoints
+
+
+Service registry also provides you different URL from backend url, why can’t we eliminate proxy layer?
+
+No, Service registry and API Gateway are dealing with different concerns in your architecture
+
+Service Registry: A service registry (like Azure Service Fabric, Consul, or Eureka) is a tool used to keep track of service instances and their locations. It's primarily used for service discovery within your microservices architecture. The service registry is not typically exposed to external clients; rather, it's used internally by services and the API Gateway to locate each other.
+API Gateway: An API Gateway is designed to manage and expose your APIs to the outside world. It provides a single entry point for client applications, handles routing, security, and other cross-cutting concerns. The API Gateway is what your frontend application interacts with.
+
+In fact communication will be like 
+- [ ] UI → API Gateway: The UI makes a request to the API Gateway.
+- [ ] API Gateway → Service Registry (internal): The API Gateway uses service discovery to locate the backend service (service registry interaction is internal).
+- [ ] API Gateway → Backend Service: The API Gateway sends the request to the backend service and fetches the data.
+- [ ] API Gateway → UI: The API Gateway returns the response to the UI.
+
