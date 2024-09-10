@@ -1,0 +1,264 @@
+GraphQl
+
+GraphQL Main Components
+
+1. Schema and Types
+
+   Schema: Defines the structure and capabilities of the GraphQL API. 
+
+   Types: The fundamental building blocks of the schema.
+
+   - Object Types: Represent a type with fields.
+     graphql
+     type Person {
+       id: ID!
+       name: String!
+       phoneNumber: String
+     }
+     
+
+   - Scalar Types: Represent primitive data values (e.g., `String`, `Int`, `Float`, `Boolean`, `ID`).
+     graphql
+     scalar Date
+     
+
+   - Enum Types: A set of predefined values.
+     graphql
+     enum Gender {
+       MALE
+       FEMALE
+       OTHER
+     }
+     
+
+   - Interface Types: Define fields that multiple object types can implement.
+     graphql
+     interface Character {
+       id: ID!
+       name: String!
+     }
+     
+     type Human implements Character {
+       id: ID!
+       name: String!
+       homePlanet: String
+     }
+     
+     type Droid implements Character {
+       id: ID!
+       name: String!
+       primaryFunction: String
+     }
+     
+
+   - Union Types: Allow a field to return one of several types.
+     graphql
+     union BookOrAuthor = Book | Author
+     
+
+   - Input Object Types: Used for input parameters in queries and mutations.
+     graphql
+     input CreatePersonInput {
+       name: String!
+       age: Int!
+     }
+     
+
+2. Query and Mutation
+
+   - Query: Fetches data from the server.
+     graphql
+     query GetPersonQuery($id: ID!) {
+       person(id: $id) {
+         name
+         phoneNumber
+       }
+     }
+     
+
+   - Mutation: Modifies data on the server.
+     graphql
+     mutation CreatePersonMutation($name: String!, $phoneNumber: String!) {
+       createPerson(name: $name, phoneNumber: $phoneNumber) {
+         id
+         name
+         phoneNumber
+       }
+     }
+     
+
+3. Resolver
+
+   Resolvers: Functions that implement the logic for fetching and returning data which will be on Javascript or Python or any… from where you will make Graphql call
+
+   Example (JavaScript):
+   javascript
+   const resolvers = {
+     Query: {
+       person: (parent, args, context, info) => {
+         return getPersonById(args.id);
+       }
+     },
+     Mutation: {
+       createPerson: (parent, args, context, info) => {
+         return createNewPerson(args.name, args.phoneNumber);
+       }
+     }
+   };
+   
+
+4. Schema Directives
+
+   Schema Directives: Custom instructions that can modify the behavior of fields or types.
+
+   Example:
+   graphql
+   directive @upper on FIELD_DEFINITION
+
+   type Query {
+     greet: String @upper
+   }
+   
+
+   Directive Implementation:
+   javascript
+   const { SchemaDirectiveVisitor } = require('graphql-tools');
+   const { defaultFieldResolver } = require('graphql');
+
+   class UpperDirective extends SchemaDirectiveVisitor {
+     visitFieldDefinition(field) {
+       const { resolve = defaultFieldResolver } = field;
+       field.resolve = async function (...args) {
+         const result = await resolve.apply(this, args);
+         return typeof result === 'string' ? result.toUpperCase() : result;
+       };
+     }
+   }
+   
+
+5. Fragments
+
+   Fragments: Reusable pieces of query logic that allow for the definition of common query fields.
+
+   Example:
+   graphql
+   fragment UserDetails on User {
+     id
+     name
+     email
+   }
+
+   query {
+     user(id: "12345") {
+       ...UserDetails
+     }
+   }
+   
+
+6. Schema Stitching
+
+   Schema Stitching: Combining multiple GraphQL schemas into a single schema. This allows you to integrate data from different sources.
+
+   Example:
+Let's say we have two GraphQL servers:
+1. Server A : Provides information about books.
+2. Server B : Provides information about authors.
+
+Each server has its own schema:
+
+BookSchema
+graphql
+type Book {
+  id: ID!
+  title: String!
+  authorId: ID!
+}
+
+type Query {
+  book(id: ID!): Book
+}
+
+
+AuthorSchema
+graphql
+type Author {
+  id: ID!
+  name: String!
+  books: [Book!]!
+}
+
+type Query {
+  author(id: ID!): Author
+}
+
+
+To combine these two schemas, we can create a new schema that includes both types and fields.
+
+Combined Schema
+graphql
+union BookOrAuthor = Book | Author
+
+type Query {
+  book(id: ID!): Book @merge(from: "BookSchema")
+  author(id: ID!): Author @merge(from: "AuthorSchema")
+  combinedBooksAndAuthors: [BookOrAuthor!]!
+}
+   
+Note: Schema stitching has been largely replaced by more modern approaches like Apollo Federation, which provides a more scalable way to compose multiple GraphQL services.
+
+
+
+Apollo Client
+
+1. Apollo Client Setup
+
+   Setup: Initialise Apollo Client with the GraphQL server URI and cache configuration.
+
+   javascript
+   import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+   const client = new ApolloClient({
+     uri: 'https://your-graphql-server.com/graphql',
+     cache: new InMemoryCache()
+   });
+   
+
+2. Wrap Your React App with ApolloProvider
+
+   Provider: Makes Apollo Client available to the React component tree.
+
+   javascript
+   function App() {
+     return (
+       <ApolloProvider client={client}>
+         <YourApp />
+       </ApolloProvider>
+     );
+   }
+   
+
+3. Use Apollo Hooks in Your Components
+
+   Hooks: Apollo provides hooks to manage queries and mutations.
+
+   Example:
+   javascript
+   import { gql, useQuery } from '@apollo/client';
+
+   const GET_DOGS = gql`
+     query GetDogs {
+       dogs {
+         id
+         breed
+       }
+     }
+   `;
+
+   const { loading, error, data } = useQuery(GET_DOGS);
+   
+
+   - `loading`: Indicates if the query is in progress.
+   - `error`: Contains any error that occurred during the query.
+   - `data`: Contains the query result.
+
+Verdict on Apollo client: Its an extra layer which helps in caching and other basic things.
