@@ -3,7 +3,7 @@ GraphQL is a query language for APIs and a runtime for executing those queries b
 
 Advantages:
    Avoid Over-fetching and Avoid Under-fetching
-   In Single call we can fetch all necessary from different model which can be associated with different database
+   In Single call we can fetch all necessary data from different model which can be associated with different database
 
 GraphQL Main Components
 
