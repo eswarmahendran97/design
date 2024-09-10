@@ -1,4 +1,9 @@
 GraphQl
+GraphQL is a query language for APIs and a runtime for executing those queries by using a type system that you define for your data. GraphQL provides a more efficient and flexible alternative to traditional REST APIs.
+
+Advantages:
+   Avoid Over-fetching and Avoid Under-fetching
+   In Single call we can fetch all necessary from different model which can be associated with different database
 
 GraphQL Main Components
 
@@ -209,6 +214,8 @@ Note: Schema stitching has been largely replaced by more modern approaches like 
 
 
 Apollo Client
+
+UI(with qraphql query) -> apollo client -> graphql server
 
 1. Apollo Client Setup
 
