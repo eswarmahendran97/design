@@ -1,0 +1,102 @@
+Reactive programming:
+It is used to process Asynchronous data stream in non blocking manner with managing backpressure. It works on pub/sub pattern
+
+Asynchronous data stream:
+An asynchronous data stream is a stream of data where values are emitted, one after another, with a delay between them. The word asynchronous means that the data emitted can appear anywhere in time, after one second or even after two minutes.
+Eg:
+buttonClick$.subscribe(() => {
+  console.log('Button clicked!');
+});
+
+Basic question: Can your CPU can create as many threads you need.. or is it based on Cores or Ram?
+RAM and CPU cores are crucial factors in determining the maximum number of threads. 
+For CPU-bound tasks, align the number of threads with the number of cores- When too many threads are created for CPU-bound tasks, they compete for CPU resources. This leads to context switching.
+while for I/O-bound tasks, you can afford to have more threads- I/O-bound tasks often involve operations that wait for external resources, such as querying a database, or making API all. These tasks spend a significant amount of time waiting rather than actively using the CPU
+
+  
+Context switching:
+Context switching is the process of storing and restoring the state (context) of a CPU so that multiple processes or threads can share a single CPU resource effectively.
+Eg;
+Imagine an operating system managing three processes (A, B, and C) on a single CPU core:
+Process A starts executing.
+After some time, the operating system interrupts A to allow B to run.
+The state of A is saved, and the state of B is restored.
+Process B executes until it is interrupted, then its state is saved.
+Process C is restored and executed.
+This cycle continues, with the OS switching between processes as needed.
+
+Schedulers are vital in managing context switching by determining when and how tasks run, the allocation of CPU resources, and the handling of thread pools.
+
+
+Schedulers:
+Most of the reactors operators are Concurrent agnostics. Means it can either follow single thread or multiple threads which will be decided by schedulers
+
+Types of Schedulers:
+Operators used:
+.subscribeOn(Schedulers.single()) // Affects the source.. i,e all onNext values need to run in same thread
+.publishOn(Schedulers.single()) // Affects downstream operators.. i,e threads getting used in all operators (map) need to be same
+use both publishOn and subscribeOn with SingleScheduler to make whole operation with 1 thread(Not main)
+.runOn(Scheduler.parallel()) // run everything in parallel
+Single: Single thread
+
+Immediate: Executes tasks immediately on the calling thread. If onNext is called by Parallel-1, operator like map also will use same thread to process immediately (not main thread)
+
+Parallel scheduler: Create mutiple subscribers with parallel thread runs at same time on same operation with different flux input. uses in runsOn (not publishOn or subscribeOn). For CPU bound task
+
+Bounded Elastic:
+Schedulers.boundedElastic() is commonly used with Mono.fromCallable() or Flux.fromCallable() for executing blocking operations in a reactive context. For I/O bound task
+Mono.fromCallable() allows you to wrap a blocking operation (like DB call, Api call, File read) inside a reactive type. 
+it won't stop main even though any delay inside operators on operation, Mutiple threads gets created as per need to run asynchronously.
+Eg: Flux.merge(multiple I/o).subscribe()
+
+Elastic scheduler: As of Reactor 3.4, Schedulers.elastic() is deprecated. It's replaced by Schedulers.boundedElastic(). It creates a thread pool that can grow dynamically, but it has no upper limit on the number of threads.
+
+
+Flux and Mono:
+Using above to only, you can process item in reactive way. Main component of reactive programming.
+Only key difference is Flux represents stream of Data and Mono represents a single data
+
+Flow of reactive programming: 
+Subscriber subscribes to Publisher and gets the data in below flow
+subscribe() -> request(count) -> onNext(0) ---- onNext(n) -> onComplete()
+
+Hot and Cold Subscriber:
+Cold - Each subscriber gets all data from start
+Hot - Subscribers only get data after subscription
+
+Important and Usesful Flux and Mono creation ways:
+Flux.fromCallable(() -> { // i/o task )} and Mono.fromCallable(() -> {// i/o task )}
+Flux.create(sink -> { // programmatically emission of items )}
+Mono.fromSupplier(() -> //simple value-producing function that does not need to handle checked exceptions );
+
+Other important concept
+1)Combining Streams
+2)Batching 
+3)Reactive to Imperative
+   eg: mono.block()
+
+                  
+Backpressure
+Backpressure is a way for consumers to control how much data they receive from a producer. This is important in reactive streams to prevent overwhelming the consumer with more data than it can handle at a given time. It allows for flow control, ensuring that the consumer processes data at its own pace.
+request(unbound) - Consumer can handle as many data you(publisher) send
+
+                  
+How reactive programming is used in Cosmos:
+The Cosmos DB SDK supports pagination automatically. When you query for a large dataset, it fetches data in manageable chunks (pages) using continuation tokens. This helps you avoid overwhelming the system with too much data at once.
+
+Initially, Cosmos client will create the thread pool which have connection established.
+
+1) My application will subscribe to Cosmos
+2) Request data from cosmos
+3) thread 1 connection will open
+3) Cosmos will send data in onNext
+4) Once batch is completed, My app will again request another batch using same thread still timeout
+5) Cosmos will send next batch using same thread still time out. Once timeout, thread will return pool. New thread will fetch remaining in batch
+6) Once every thing is completed.. cosmos will notify through onComplete.
+Additional point:
+Cosmos client uses.. FluxSink
+FluxSink is an interface that provides a way to programmatically emit items into a Flux. Means Sink is responsible to fetch the data from Cosmos DB and emit it on OnNext()
+
+
+Extra point:
+If you need to write test cases for TimeDelay.. Use StepVerifier.withVirtualTime with .thenAwait()
