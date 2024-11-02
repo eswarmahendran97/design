@@ -99,4 +99,5 @@ FluxSink is an interface that provides a way to programmatically emit items into
 
 
 Extra point:
+Window vs Buffer: Window will group the items as Flux<Flux> and Buffer will group the items as Flux<List>
 If you need to write test cases for TimeDelay.. Use StepVerifier.withVirtualTime with .thenAwait()
