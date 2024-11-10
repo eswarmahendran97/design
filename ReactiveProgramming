@@ -84,6 +84,9 @@ Flux.fromCallable(() -> { // i/o task )} and Mono.fromCallable(() -> {// i/o tas
 Flux.create(sink -> { // programmatically emission of items )}
 Mono.fromSupplier(() -> //simple value-producing function that does not need to handle checked exceptions );
 
+How defer differs from fromCallable:
+If you use defer, when ever you subscrible new mono will be created
+
 Other important concept
 1)Combining Streams
 2)Batching 
