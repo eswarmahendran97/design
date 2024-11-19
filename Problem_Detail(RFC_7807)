@@ -1,0 +1,20 @@
+Problem Detail (RFC 7807)
+
+
+RFC 7807, titled "Problem Details for HTTP APIs", defines a standardized format for representing error responses in HTTP APIs. This is useful for conveying error information in a consistent, structured way that can be easily parsed by both humans and machines. Prior to RFC 7807, error responses could be conveyed in various ad-hoc formats, making it difficult to handle and interpret errors in a uniform manner.
+
+Key elements of the Problem Details format include:
+* type (optional): A URI that identifies the problem type. This could be a link to documentation that explains the problem.
+* title: A short, human-readable summary of the problem.
+* status: The HTTP status code (e.g., 400, 404) related to the error.
+* detail (optional): A detailed description of the problem, explaining the context or providing additional information.
+* instance (optional): A URI that identifies the specific occurrence of the problem, useful for debugging or referencing a specific error instance.
+
+Example of a Problem Detail response:
+{
+  "type": "https://example.com/probs/out-of-credit",
+  "title": "You have run out of credit.",
+  "status": 400,
+  "detail": "Your current balance is 0, and you need at least 1 credit to perform this action.",
+  "instance": "/account/12345/transactions/67890"
+}
