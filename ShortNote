@@ -5,3 +5,17 @@ Used for passing attribute from one filter to another filter.
 Eg:
 AuthenticationFilter -> Authenticates and sends User Detail as attribute
 AuthorizationFilter -> Gets the User Detail from attribute and fetch the type from it and Authorizes
+
+
+2) If some exception occurs, what is best way to provide the Error status to User/Another Service?
+Problem_Detail(RFC_7807) Format
+
+
+3) Why you don't need to add throws when throwing a RuntimeException, but you do need to add throws when throwing a custom checked exception?
+Checked exceptions: These are exceptions that the compiler forces you to handle. Checked exceptions must either be caught in a try-catch block or declared in the method's throws clause. 
+Unchecked exceptions (Runtime exceptions): These are exceptions that the compiler does not force you to handle. You are not required to catch them or declare them in the method's throws clause. This is because unchecked exceptions are typically used to represent programming bugs or conditions that are not expected to be handled by the caller.
+
+When to use:
+Compile time Exception:
+Eg: For retying when network issue occurs
+Runtime Exception: Eg: Nullpointer for user data
