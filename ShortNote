@@ -1,0 +1,7 @@
+1) Attributes in webFilter(Java)
+
+Used for passing attribute from one filter to another filter.
+
+Eg:
+AuthenticationFilter -> Authenticates and sends User Detail as attribute
+AuthorizationFilter -> Gets the User Detail from attribute and fetch the type from it and Authorizes
