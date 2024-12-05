@@ -27,3 +27,8 @@ Value -> encoding of username and password
 5) Important things to note while using Webclient
     1) Uses reactor Netty server
     2) While passing query param use Map.of() to get meaning response in case of wrong input
+
+
+6) WebFilter vs Exchange Filter
+Web Filter -> Used for filtering incoming request. Attributes can be passed to different filter and to controller as well
+Exchnage Filter -> Used for filtering when we are making API call some other service. Attributes can be passed to different filter.
