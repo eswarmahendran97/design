@@ -18,3 +18,12 @@ When to use:
 Compile time Exception:
 Eg: For retying when network issue occurs
 Runtime Exception: Eg: Nullpointer for user data
+
+
+4) What is Basic auth format?
+Key > Basic
+Value -> encoding of username and password
+
+5) Important things to note while using Webclient
+    1) Uses reactor Netty server
+    2) While passing query param use Map.of() to get meaning response in case of wrong input
