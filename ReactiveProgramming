@@ -115,6 +115,35 @@ Additional point:
 Cosmos client uses.. FluxSink
 FluxSink is an interface that provides a way to programmatically emit items into a Flux. Means Sink is responsible to fetch the data from Cosmos DB and emit it on OnNext()
 
+Thread used while doing reactive repository operation
+below code uses main thread
+repository.findAll()
+    .limitRate(10)
+    .delayElements(Duration.ofMillis(100))
+    .subscribe(...);
+
+below code uses single bounded elastic thread all operation
+repository.findAll()
+    .subscribeOn(Schedulers.boundedElastic())
+    .limitRate(10)
+    .delayElements(Duration.ofMillis(100))
+    .subscribe(...);
+
+below uses multiple bounded elastic thread
+Mono.fromCallable(() -> { 
+  return repository.findAll() 
+  .limitRate(10) 
+  .subscribeOn(Schedulers.boundedElastic())
+  .collectList()  
+})
+.subscribe(...);
+
+Only operation down stream to publishOn uses bounded elastic thread
+repository.findAll()
+    .publishOn(Schedulers.boundedElastic())
+    .limitRate(10)
+    .delayElements(Duration.ofMillis(100))
+    .subscribe(...);
 
 Extra point:
 Window vs Buffer: Window will group the items as Flux<Flux> and Buffer will group the items as Flux<List>
