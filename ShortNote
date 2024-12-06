@@ -24,6 +24,7 @@ Runtime Exception: Eg: Nullpointer for user data
 Key > Basic
 Value -> encoding of username and password
 
+
 5) Important things to note while using Webclient
     1) Uses reactor Netty server
     2) While passing query param use Map.of() to get meaning response in case of wrong input
@@ -32,3 +33,20 @@ Value -> encoding of username and password
 6) WebFilter vs Exchange Filter
 Web Filter -> Used for filtering incoming request. Attributes can be passed to different filter and to controller as well
 Exchnage Filter -> Used for filtering when we are making API call some other service. Attributes can be passed to different filter.
+
+
+7)Json Array format vs Json line format
+Json Array:
+[
+{"name": "Alice”},
+{"name": "Bob”},
+{"name": "Charlie"}
+]
+
+Json line:
+{"name": "Alice"}
+{"name": "Bob"}
+{"name": "Charlie"}
+
+Why we need Json line format?
+Unlike the JSON array format, there is no outer array. Each line represents a separate JSON object. It is well-suited for streaming applications, where data can be processed one line at a time. This is especially useful for handling large datasets that do not fit entirely in memory. Using this we don’t want load whole data into memory. 
