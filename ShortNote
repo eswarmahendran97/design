@@ -50,3 +50,12 @@ Json line:
 
 Why we need Json line format?
 Unlike the JSON array format, there is no outer array. Each line represents a separate JSON object. It is well-suited for streaming applications, where data can be processed one line at a time. This is especially useful for handling large datasets that do not fit entirely in memory. Using this we don’t want load whole data into memory. 
+
+Eg: I need to send 1000 object to a client to process it
+Using application/json -> It will sent as array of object, Client need to deserialize the whole array then he will be processing it
+Using application/ndjson -> It will sent json with new line format, Client can deserialize the object one by one then he will be processing it
+
+But using Flux with application/json will can able to process data one by one
+
+So When to use application/ndjson
+If server send large chunk of dataset to process, server using application/ndjson type can process each data one by one
