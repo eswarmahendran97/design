@@ -1,0 +1,35 @@
+Server Sent Events (SSE)
+
+SSE Basics
+* SSE is a web technology for real-time, one-way communication from server to client
+* Built on top of HTTP protocol
+* Uses HTTP Keep-Alive mechanism to maintain long-lived connections
+Platform Usage
+* SSE is primarily used in web browsers
+* Mobile apps typically use push notifications instead
+* SSE is only active when the browser tab is open
+Connection Mechanism
+* When you open a website like Facebook, a channel is established between your browser and the server
+* The connection allows for real-time updates (like likes, comments)
+Server Capacity
+* Facebook has robust infrastructure to handle billions of users
+* The server manages connections through thread pools
+* If a server is set to handle 100 concurrent HTTP requests:
+    * This means 100 threads are available
+    * Each connection (SSE or regular HTTP request) uses a thread
+    * New requests will wait if all threads are occupied
+SSE vs. WebSocket
+* SSE advantages:
+    * Low overhead
+    * Low latency
+    * Simple one-way communication
+* WebSocket advantages:
+    * Two-way communication
+    * More complex
+    * Requires more resources to maintain state
+Request Handling
+* With 100 SSE connections open, the server is using 100 threads
+* A new GET request will:
+    * Wait for an available thread
+    * Be processed when a thread becomes free
+* This is a typical thread pool management strategy in server architectures
