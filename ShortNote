@@ -63,3 +63,11 @@ If server send large chunk of dataset to process, server using application/ndjso
 
 when using Flux in a POST or GET request with WebFlux will connection is open for long time?
 Yes, indeed you can  send and receive data asynchronously, and the connection remains open for an extended period while data is being streamed. But Thread will not be blocked
+
+
+8)gZip
+Gzip is a widely used compression method that reduces the size of HTTP response data. 
+    1) When a client (browser or application) sends an HTTP request to a server, it should include an Accept-Encoding header. 
+    2) Upon receiving the request, the server checks the Accept-Encoding header to determine the client can handle compressed responses.
+    3) gZip uses the DEFLATE compression method, which is a combination of Huffman coding and LZ77 compression to reduce the size of the response data and send it to client along with a Content-Encoding: gzip header.
+    4) The client then decompresses the response body using the Gzip algorithm once it sees the Content-Encoding: gzip header
