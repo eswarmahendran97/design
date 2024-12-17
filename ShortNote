@@ -60,7 +60,6 @@ But using Flux with application/json will can able to process data one by one
 So When to use application/ndjson
 If server send large chunk of dataset to process, server using application/ndjson type can process each data one by one
 
-
 when using Flux in a POST or GET request with WebFlux will connection is open for long time?
 Yes, indeed you can  send and receive data asynchronously, and the connection remains open for an extended period while data is being streamed. But Thread will not be blocked
 
