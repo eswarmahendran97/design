@@ -74,10 +74,11 @@ gZip is a widely used compression method that reduces the size of HTTP response 
 
 9)OutBound port on request:
 Let's say we have hosted our application on Port 8080, Which means our application is listening for incoming requests on port 8080. Here Port 8080 is used for communication when client sends request to server. But when our application is making request to another application it won't use 8080 it uses random high number port for outbound. By using random port we can reuse and have multiple connections from our source application.
+so when I make 1000 concurrent request 1000 outbound ports will be open. Also In http1.x you cannot send multiple request in same TCP connection, one request and response had to finish before the next could start.
+
+To address this you can use HTTP2. Through multiplexing, in single TCP connection multiple request can be sent as stream and can receive multiple response at same time as stream(bidirectionally).
 
 10) Summary of Layer Roles in HTTPS:
         Layer	                    Contribution to HTTPS Connection
-Transport Layer (TCP)	    Establishes the connection and ensures reliable, error-free data transfer.
-Session Layer (TLS)	        Performs the TLS handshake to establish a secure session between the client and server.
-Presentation Layer (TLS)	Handles encryption, data integrity, and certificate verification via TLS.
-Application Layer (HTTP)	Handles the HTTP protocol to manage requests and responses, such as GET/POST requests.
+Transport Layer (TCP)	    Responsible for the encryption and security provided by SSL/TLS in HTTPS communication.    
+Application Layer (HTTP)	Responsible for HTTPS itself, which is just HTTP over a secure connection
