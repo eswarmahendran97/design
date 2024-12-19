@@ -82,3 +82,12 @@ To address this you can use HTTP2. Through multiplexing, in single TCP connectio
         Layer	                    Contribution to HTTPS Connection
 Transport Layer (TCP)	    Responsible for the encryption and security provided by SSL/TLS in HTTPS communication.    
 Application Layer (HTTP)	Responsible for HTTPS itself, which is just HTTP over a secure connection
+
+11) BOM (Bill of materials)
+The BOM's purpose is to define a set of versions for a library that can be used across multiple projects to ensure version consistency.
+
+If the Library is present in BOM(This Bom added in my POM file), I dont want to that Library in POM file since I can use it as transtive dependency?
+BOM only manages versions - doesn't include actual dependencies. It is not packed as JAR, it packed as POM. So, Its can't be used like above.
+
+Also while including BOM as dependency we need to specify <type>pom</type> and <scope>import</scope> below version of BOM. 
+
