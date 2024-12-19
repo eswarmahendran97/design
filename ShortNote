@@ -89,5 +89,8 @@ The BOM's purpose is to define a set of versions for a library that can be used 
 If the Library is present in BOM(This Bom added in my POM file), I dont want to that Library in POM file since I can use it as transtive dependency?
 BOM only manages versions - doesn't include actual dependencies. It is not packed as JAR, it packed as POM. So, Its can't be used like above.
 
-Also while including BOM as dependency we need to specify <type>pom</type> and <scope>import</scope> below version of BOM. 
+Also while including BOM as dependency we need to specify <type>pom</type> and <scope>import</scope> below version of BOM. Also you need to add you what ever dependency you need in your application POM, just you do need to specify the version. This version wil be coming from BOM(if BOM have it).
+
+For maiting version I can use Transtive dependency itself right by creating a wrapper application?
+Lets say you wrapper have 20 dependency and adding as depedency in your application, but one of your application need only 10 of that, then why your application need to have unused remaining 10 dependency. But when you use BOM you will be specifying version and it will packed as POM not Jar.
 
