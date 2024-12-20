@@ -94,3 +94,18 @@ Also while including BOM as dependency we need to specify <type>pom</type> and <
 For maiting version I can use Transtive dependency itself right by creating a wrapper application?
 Lets say you wrapper have 20 dependency and adding as depedency in your application, but one of your application need only 10 of that, then why your application need to have unused remaining 10 dependency. But when you use BOM you will be specifying version and it will packed as POM not Jar.
 
+
+12) BFF vs API gateway
+If you are just using BFF as proxy the API gateway is enough but BFF can do many things, Eg: Without BFF you might be making 10 API server call to get a particular data but using BFF, client will make one call to BFF and BFF will make 10 calls to server so that you browser will not have more load. 
+
+You can say I will modify in a way that my browser makes one and server process and give the data accordingly,
+At any cost you server should be generic(fine-grained APIs that BFFs can compose differently for each client), it should act based in client need. What if tomorrow there comes a situation to support Mobile  Also it is advised to have one BFF for one client eg: 1 for browser and 1 for mobile
+
+Also you can handle cache in BFF, Response transformation, Error handling etc.
+
+Also since performance of Node.js when combining with Frontend library its good to use Node as BFF layer
+
+When implementing Server-Sent Events (SSE) with a Backend-for-Frontend (BFF) architecture, you essentially have two tunnels or connections in play
+1)Backend Server to BFF
+2)BFF to Client
+
