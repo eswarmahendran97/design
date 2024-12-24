@@ -1,0 +1,196 @@
+WSDL
+
+A WSDL (Web Services Description Language) file is an XML-based document used to describe a web service, including its functions, parameters, data types, and how it can be accessed.
+
+<wsdl:types>
+* Purpose: This is the root element where all the data types are defined in the WSD
+
+<wsdl:types>
+  <xsd:schema>...</xsd:schema>
+</wsdl:types>
+
+
+<xsd:schema>
+* Purpose: It’s the container for all the types, elements, and complex structures defined in the web service.
+
+<xsd:schema>
+  <!-- Type definitions here -->
+</xsd:schema>
+
+
+
+<xsd:element>
+* Purpose: This defines an XML element that can be used in messages
+Eg:
+<xsd:element name="Employee" type="xsd:string"/>
+Here, Employee is an element with the type string.
+
+
+
+<xsd:simpleType>
+* Purpose: Defines a simple type. Simple types are basic data types like strings, integers, dates, etc. 
+Eg:
+<xsd:simpleType name="PhoneNumber">
+  <xsd:restriction base="xsd:string">
+    <xsd:pattern value="\d{3}-\d{3}-\d{4}"/>
+  </xsd:restriction>
+</xsd:simpleType>
+
+
+Simple Type vs Element
+
+
+
+<xsd:restriction>
+* Purpose: Used within a simpleType to restrict or limit the allowed values for that type.
+<xsd:restriction base="xsd:string">
+  <xsd:pattern value="\d{3}-\d{3}-\d{4}"/>
+</xsd:restriction>
+In this example, the restriction is that the string must match the pattern of a phone number (xxx-xxx-xxxx).
+
+
+
+<xsd:complexType>
+* Purpose: Object structure which can have elements (child elements) inside it
+Eg:
+<xsd:complexType>
+  <xsd:sequence>
+    <xsd:element name="id" type="xsd:int"/>
+    <xsd:element name="name" type="xsd:string"/>
+  </xsd:sequence>
+</xsd:complexType>
+This defines a complex type with two elements: id (integer) and name (string).
+
+
+Simple vs Complex
+Simple: Only one element 
+Complex: Object, can have multiple element
+
+
+Simple, complex Type vs Element
+
+Element is the variable which hold the type
+
+<wsdl:types>
+  <xsd:schema targetNamespace="http://www.example.com/webservice">
+    
+    <xsd:simpleType name="PhoneNumber">
+      <xsd:restriction base="xsd:string">
+        <xsd:pattern value="\d{3}-\d{3}-\d{4}"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+  <xsd:complexType name="Employee">
+    <xsd:sequence>
+      <xsd:element name="EmployeeID" type="xsd:int"/>
+      <xsd:element name="FirstName" type="xsd:string"/>
+      <xsd:element name="LastName" type="xsd:string"/>
+      <xsd:element name="Age" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="EmployeeRecord" type="Employee"/>
+
+    <xsd:element name="EmployeePhone" type="tns:PhoneNumber"/>
+    
+  </xsd:schema>
+</wsdl:types>
+
+
+<xsd:sequence>
+* Purpose: Defines the order in which elements should appear within a complex type
+Eg:
+<xsd:sequence>
+  <xsd:element name="id" type="xsd:int"/>
+  <xsd:element name="name" type="xsd:string"/>
+</xsd:sequence>
+This specifies that id should appear before name.
+
+
+
+<xsd:annotation>
+* Purpose: This provides a way to add documentation or extra metadata to an XML element, type, or schema. 
+Eg:
+<xsd:annotation>
+  <xsd:documentation>
+    This is the type for a phone number.
+  </xsd:documentation>
+</xsd:annotation>
+
+
+
+<xsd:appinfo>
+* Purpose: This is used inside an <xsd:annotation> to provide additional application-specific information, often used by tools or systems consuming the WSDL.
+Eg:
+<xsd:annotation>
+  <xsd:appinfo>
+    <wd:enumeration value="Low"/>
+    <wd:enumeration value="Medium"/>
+    <wd:enumeration value="High"/>
+  </xsd:appinfo>
+</xsd:annotation>
+
+
+
+<wd:enumeration>
+* Purpose: Defines an enumeration (a fixed set of allowed values) within a type.
+Eg:
+<xsd:restriction base="xsd:string">
+  <xsd:enumeration value="Low"/>
+  <xsd:enumeration value="Medium"/>
+  <xsd:enumeration value="High"/>
+</xsd:restriction>
+This defines that a field can only have one of the three values: Low, Medium, or High.
+
+
+
+<xsd:extension>
+* Purpose: Used in a complexType to extend an existing type by adding more elements. (Inheritance)
+Eg:
+<xsd:complexType>
+  <xsd:extension base="xsd:string">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:extension>
+</xsd:complexType>
+In this example, the new type extends an existing type (xsd:string) and adds an element name.
+
+
+
+Attribute vs Element
+Attributes are usually used for supplementary information related to an element, such as identifiers, properties, or settings.
+
+Eg:
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:element name="Employee">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="EmployeeID" type="xsd:int"/>
+      </xsd:sequence>
+      <xsd:attribute name="status" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>
+
+Sample:
+<Employee status="active">
+  <EmployeeID>12345</EmployeeID>
+</Employee>
+
+
+
+<xsd:simpleContent>
+When you define simpleContent in a complex type, the content of the type is simple (a string, integer, or any other simple type), but you can add attributes to it. complexType cant have simpleType inside it. so we use simpleContent
+
+Eg:
+  <xsd:complexType name="PhoneNumber">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <!-- Add an attribute to the simple content -->
+        <xsd:attribute name="type" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
