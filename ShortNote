@@ -154,3 +154,45 @@ Ways of data seperation
 - Schema per tenant
 - Database per tenant
 
+
+16) Will below example wont work, Is this because of immutability in functional programming?
+Eg:
+int i = 0;
+IntStream.range(0, 10).forEach(e -> {
+    i = e;  // Trying to modify the local variable `i` inside the lambda
+});
+
+No, It nothing to do with Immutability. The error occurs because Java enforces final or effectively final restrictions on local variables used in lambda expressions.This is done to prevent unintended side effects or threading issues.
+
+How?
+When the declared variable “I” in parallel streams() or asynchronous processing  will case issue. So java wants it to be effectively final.
+
+
+17) By keeping produces = MediaType.TEXT_EVENT_STREAM_VALUE as header, makes tomcat web server as reactive?
+When we use produces = MediaType.TEXT_EVENT_STREAM_VALUE or request.startAsync(), tomcat can process the data asynchronously but either way it will block a thread.
+We can use Netty server as reactive server which wont block a thread
+
+
+18) Reactive kafka over kafka in springboot?
+Spring Boot will automatically use Netty instead of Tomcat, if you're using Reactive Kafka for producing or consuming Kafka messages
+
+If you need to publish multiple message in Kafka, using Reactive Kafka ensures that the HTTP request thread isn’t blocked while the messages are being sent to Kafka, allowing your application to handle more concurrent requests without requiring more threads.
+
+
+19) cross cutting concerns
+They are not related to any specific business logic but are essential for the application's operation. These concerns "cut across" multiple modules or layers of the application.
+- Logging
+- Security/Authentication
+- Transaction management
+- Caching
+- Error handling
+
+In traditional way, it may lead to scattering and tangling 
+Scattering: same code is Scattered accross multiple modules thus leading to duplication
+Tangling: These cross cutting code(doesnt do anything with functionality) will be present inside business logic which make code complex
+
+To address this we can make use of AOP (Aspect-Oriented Programming)
+AOP allows to modularize cross-cutting concerns into separate units called "aspects" and apply them to the codebase without modifying the core logic.
+Eg: Custom Logging using AOP, annotations like, @Transactional, @Cacheable, @PreAuthorize etc...
+
+
