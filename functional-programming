@@ -1,0 +1,36 @@
+Functional programming
+
+It is a declarative style of programming rather than imperative
+
+Imperative:
+You define step-by-step how the program should accomplish its task, including managing state, control flow, and side effects.  Eg: traditional for loop to get sum of 100 numbers
+
+Declarative:
+You define the desired result or the end goal, and the underlying system takes care of the details. 
+Eg: IntStream.range(0, 100).sum()
+
+
+Key concepts in functional programming:
+- [ ] Pure function
+- [ ] Immutable State
+- [ ] assignment-less programming
+
+
+Pure function vs Impure function:
+Pure function: always returns same output for same input
+Eg: int square(int x){ return x*x;}
+
+Impure function: May not return same output every time.
+Eg: int random(){ return Math.Random();}
+
+
+Why functional programming uses Pure function and Immutable State
+Functional programming (FP) emphasizes pure functions and immutable state because these two concepts provide several key benefits that enhance program correctness, clarity, and maintainability
+
+How its used in Lamda Expression
+
+Pure function:
+Function<Integer, Integer> doubleFunction = x -> x * 2; // Using the pure function in a stream 
+List<Integer> doubledNumbers = numbers.stream() .map(doubleFunction) .collect(Collectors.toList());  Immutability:
+List<Integer> numbers = List.of(1, 2, 3, 4, 5); // Lambda expression using immutable state 
+List<Integer> squaredNumbers = numbers.stream() .map(x -> x * x) // Pure function: squares each element .collect(Collectors.toList());
