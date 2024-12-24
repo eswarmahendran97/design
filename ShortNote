@@ -144,3 +144,13 @@ The system will block reads or writes to certain parts of the system until the p
 If you prioritize Availability (A):
 The system will allow reads and writes to proceed even if some parts of the system are out of sync. This sacrifices Consistency.
 
+
+15) Multitenant
+Lets say you have a application where 2 customers is using where a customer can have 1 or more extra feature. So, you will be hosting the application and database for those 2 customers seperately. If customers grows, the admistrative complexity will increase.
+So that you can host your application in a single place with horizontal scalling and do the data seperation between customers
+
+Ways of data seperation
+- Shared schema with tenant id(seperate tenant id column)
+- Schema per tenant
+- Database per tenant
+
