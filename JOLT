@@ -1,0 +1,68 @@
+Jolt
+
+JOLT (JSON to JSON Transformation) facilitate the transformation of JSON data
+
+JOLT Spec (Specification)
+The spec is a Json file which has transformation rules. It describes how the input JSON should be transformed to achieve the desired output.
+
+Input Json:
+{
+  "user": {
+    "name": "John",
+    "age": 30
+  },
+  "location": "New York"
+}
+
+
+Spec json:
+[
+  {
+    "operation": "shift",
+    "spec": {
+      "user": {
+        "name": "full_name",
+        "age": "user_age"
+      },
+      "location": "city"
+    }
+  }
+]
+
+
+Output: {
+  "full_name": "John",
+  "user_age": 30,
+  "city": "New York"
+}
+
+
+Operations in JOLT
+
+shift for restructuring and renaming. Updates the filed/key alone
+default for adding missing fields.
+remove for deleting fields.
+add for adding fields.
+modify for altering field values.
+cardinality for managing array structures.
+sort for sorting arrays.
+merge for combining multiple JSON objects.
+
+
+Chainr
+Chainr is a core class in JOLT responsible for transforming the input JSON into the desired output.
+
+List<Object> specJSON = JsonUtils.classpathToList(specFilePath);
+Chainr chainr = Chainr.fromSpec(specJSON);
+Object transformedData = chainr.transform(inputMap);
+
+
+Advanced Usage:
+Chaining Multiple Operations
+List<Object> specs = Arrays.asList(
+    shiftSpec,  // First transformation
+    defaultSpec,  // Second transformation
+    removeSpec   // Third transformation
+);
+Chainr chainr = Chainr.fromSpec(specs);
+Object transformedData = chainr.transform(inputMap);
