@@ -78,10 +78,12 @@ so when I make 1000 concurrent request 1000 outbound ports will be open. Also In
 
 To address this you can use HTTP2. Through multiplexing, in single TCP connection multiple request can be sent as stream and can receive multiple response at same time as stream(bidirectionally).
 
+
 10) Summary of Layer Roles in HTTPS:
         Layer	                    Contribution to HTTPS Connection
 Transport Layer (TCP)	    Responsible for the encryption and security provided by SSL/TLS in HTTPS communication.    
 Application Layer (HTTP)	Responsible for HTTPS itself, which is just HTTP over a secure connection
+
 
 11) BOM (Bill of materials)
 The BOM's purpose is to define a set of versions for a library that can be used across multiple projects to ensure version consistency.
@@ -108,4 +110,37 @@ Also since performance of Node.js when combining with Frontend library its good 
 When implementing Server-Sent Events (SSE) with a Backend-for-Frontend (BFF) architecture, you essentially have two tunnels or connections in play
 1)Backend Server to BFF
 2)BFF to Client
+
+
+13) Sql vs NoSql
+Sql - Structured Data and Relation between table
+NoSql - Best for semi structured data
+
+In future if your table needs to have multiple column(based on new feature) you need to do an alter table query.  But in NoSql it not needed
+Also noSql has the inbuilt concept of sharing to scale horizontally. Sql is good for vertical scaling
+
+SemiStructured Data
+XML, json or key-value pair have a certain format but they do not follow a rigid, predefined schema like structured data 
+
+Eg: Json have key-value pairs and Arrays being said that it won't follow a predefined schema
+
+Although you can store unstructured  data (images, video, audio, raw logs, documents) in noSql db, best tool to store other it is Hadoop, HDFS etc..  because these tools are built for massive data processing and analysis. While  NoSQL db are designed for flexible, scalable data storage and retrieval
+
+Cons of NoSql:
+Eventual consistency: NoSql doesn't guarantee that all reads will return the most recent write since it has replicas. Whereas in Sql it possess strong consistency.
+
+
+14) CAP Theorem -> why you can achieve at most two out of three properties?
+Consistency (C): Every read operation on the system returns the most recent write
+Availability (A): Every request (read or write) receives a response
+Partition Tolerance (P): A partition refers to a situation where nodes is failed. The system continues to function, even when network partitions or communication failures occur between nodes
+
+The CAP Theorem states that in a distributed system, you can achieve at most two out of three of the above properties,
+Partition Tolerance is Non-Negotiable.
+
+If you prioritize Consistency (C):
+The system will block reads or writes to certain parts of the system until the partition is resolved, ensuring that all nodes have the same data. This sacrifices Availability.
+
+If you prioritize Availability (A):
+The system will allow reads and writes to proceed even if some parts of the system are out of sync. This sacrifices Consistency.
 
