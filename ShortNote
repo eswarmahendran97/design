@@ -196,3 +196,15 @@ AOP allows to modularize cross-cutting concerns into separate units called "aspe
 Eg: Custom Logging using AOP, annotations like, @Transactional, @Cacheable, @PreAuthorize etc...
 
 
+20) RU in DB
+RU - request units
+RUs are a proxy for the compute, memory, and IO used to process database operations. It is essentially a unit of measure for the cost of operations in the DB given by cloud provider.
+throughput is the capacity of a system to handle data or tasks over a period of time. This throughput calculted for our DB by RU/s
+
+Example of RU Consumption:
+1 RU: Read operation using primary key.
+5-10 RUs: Writing or updating a 1 KB document (depending on indexing).
+50-100 RUs: Running a query that scans through a large number of documents.
+
+
+
