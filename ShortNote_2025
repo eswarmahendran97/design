@@ -1,0 +1,7 @@
+1) Constructor injection over @Autowired
+
+1. When you inject object using constructor injection, the object will be final. So new threads cannot modify the fields or values of the injected object(which can be done when we inject object using @Autowired)
+2. Easy for testing
+3. Not a spring boot code. Its plain java code
+
+The key advantage of constructor injection is that it enforces proper initialization and immutability, which is especially important in multi-threaded applications.
