@@ -5,3 +5,19 @@
 3. Not a spring boot code. Its plain java code
 
 The key advantage of constructor injection is that it enforces proper initialization and immutability, which is especially important in multi-threaded applications.
+
+
+2) DNS load-balancing and Multiple Load balancers
+Can Dns will return with multiple IPs when we search for a domain?
+Yes, either it can be IPs of your application deployed as multiple instance or multiple load balancer IPs
+
+Will my application have multiple load balancer instance?
+Yes, Eg: Elastic load balancer (powered by AWS) will have multiple instance which can scale up and down
+
+What DNS will do If Authoritative server returns with multiple IPs for a domain?
+It will load balance Round Robin, Geo, Weighted Round Robin etc and gives a single IP to the use
+
+The why I need separate load balancer if DNS performs load balancing task?
+DNS will not make health check of your server
+DNS has TTL(it will cache the server health/count information for a specific time). So it may wrongly redirect to unhealthy or scaled down server
+No advance feature like rate limiting, Sticky session(same user getting routed to same server)
