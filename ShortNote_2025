@@ -21,3 +21,12 @@ The why I need separate load balancer if DNS performs load balancing task?
 DNS will not make health check of your server
 DNS has TTL(it will cache the server health/count information for a specific time). So it may wrongly redirect to unhealthy or scaled down server
 No advance feature like rate limiting, Sticky session(same user getting routed to same server)
+
+
+3) Main component of seperate GraphQl server?
+const server = new ApolloServer({ typeDefs, resolvers }); //  Apollo Server is an implementation of GraphQL using Node.js
+typeDefs - Schema definition (Types, Query and Mutation)
+resolvers - Resolvers are the functions that actually fetch the data from API when a GraphQL query is executed
+
+When a client makes a query, the server looks at the schema (typeDefs) and maps each requested field to a corresponding resolver function.
+
