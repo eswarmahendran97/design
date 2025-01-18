@@ -30,3 +30,15 @@ resolvers - Resolvers are the functions that actually fetch the data from API wh
 
 When a client makes a query, the server looks at the schema (typeDefs) and maps each requested field to a corresponding resolver function.
 
+
+4) Join vs Multi Select
+SELECT * FROM Order o JOIN Customer c on c.cId =  c.Id where c.id = 10 vs SELECT * FROM Order WHERE cId IN (SELECT id FROM Customer where id=10)
+
+Joins will be more efficient because database engine typically optimizes JOIN operations. (Join is expensive operation is a Myth). Also for multiple select operation Multiple round trips to the database will be made.
+
+When Select is better than Join
+When you perform a JOIN, indexes are missing or not optimized where the database engine typically needs to match every row from one table to every row from another table, potentially creating a huge intermediate result set. This can lead to high computational overhead and large memory consumption. That case Select is better than Join
+
+will IN query cause n+1 query issue? 
+Only while using ORM (Hibernate, JPA.. etc)
+
