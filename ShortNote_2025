@@ -42,3 +42,6 @@ When you perform a JOIN, indexes are missing or not optimized where the database
 will IN query cause n+1 query issue? 
 Only while using ORM (Hibernate, JPA.. etc)
 
+
+AuthN and AuthZ
+AuthN (authentication) and AuthZ (authorization) 
