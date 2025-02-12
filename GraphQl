@@ -268,7 +268,7 @@ UI(with qraphql query) -> apollo client -> graphql server
    - `error`: Contains any error that occurred during the query.
    - `data`: Contains the query result.
 
-Verdict on Apollo client: Its an extra layer which helps in caching and other basic things.
+Verdict on Apollo client: Apollo client is just a library not a server. Its an extra layer which helps in caching and other basic things.
 
 
 Persisted query and Automatic Persisted query
