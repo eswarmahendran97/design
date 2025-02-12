@@ -7,11 +7,11 @@ Advantages:
 
 GraphQL Main Components
 
-1. Schema and Types
+Schema (Types + Resolver)
 
-   Schema: Defines the structure and capabilities of the GraphQL API. 
+   Schema: Defines the structure and capabilities of the GraphQL API. Will be present in Graphql server 
 
-   Types: The fundamental building blocks of the schema.
+1. Types: The fundamental building blocks of the schema.
 
    - Object Types: Represent a type with fields.
      graphql
@@ -68,8 +68,7 @@ GraphQL Main Components
        age: Int!
      }
      
-
-2. Query and Mutation
+   Query Type  and Mutation Type
 
    - Query: Fetches data from the server.
      graphql
@@ -92,7 +91,7 @@ GraphQL Main Components
      }
      
 
-3. Resolver
+2. Resolver
 
    Resolvers: Functions that implement the logic for fetching and returning data which will be on Javascript or Python or any… from where you will make Graphql call
 
@@ -112,7 +111,7 @@ GraphQL Main Components
    };
    
 
-4. Schema Directives
+3. Schema Directives
 
    Schema Directives: Custom instructions that can modify the behavior of fields or types.
 
@@ -141,7 +140,7 @@ GraphQL Main Components
    }
    
 
-5. Fragments
+4. Fragments
 
    Fragments: Reusable pieces of query logic that allow for the definition of common query fields.
 
@@ -160,7 +159,7 @@ GraphQL Main Components
    }
    
 
-6. Schema Stitching
+5. Schema Stitching
 
    Schema Stitching: Combining multiple GraphQL schemas into a single schema. This allows you to integrate data from different sources.
 
