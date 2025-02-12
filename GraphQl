@@ -269,3 +269,29 @@ UI(with qraphql query) -> apollo client -> graphql server
    - `data`: Contains the query result.
 
 Verdict on Apollo client: Its an extra layer which helps in caching and other basic things.
+
+
+Persisted query and Automatic Persisted query
+With both features, clients can execute a GraphQL operation by sending an operation's ID(HashId) instead of the entire operation string(Query).
+An operation's ID is a hash of the full operation string(Query). Querying by ID can significantly reduce latency and bandwidth usage for large operation strings.
+
+If the query is large, it will increase the latency when we make request to the server. 
+   - So, we(Client) will create a hash for the Query String.
+   - This Hash is sent to the GraphQL server.
+   - In Persisted query, the hash will be already be mapped with the respective Query String.
+   - In APQ, if hash is not present in GraphQL server, server will return "PersistedQueryNotFound" error. So we will send Query string along with Hash. Now GraphQL server will store the Hash.
+   - Now using the query graphql sever will returns response from backedn API server.
+This feature can be enable or disable in Graphql server. If not enabled, Client need to send full query to the server
+
+
+SubGraphs
+SubGraph is graphql schema(types + resolver) of a service. So for each service you can have a sepearte subgraph. SubGraph itself is not standalone GraphQl server. It will be hosted in a server
+So, multiple subgraphs can be hosted in a single server.
+
+
+Graphql Server vs Federated GraphQl Gateway
+Graphql server - backend server that exposes a GraphQL API to clients. It handles requests from clients sends the response back to the client
+Federated GraphQl Gateway - It is the entry point, It has all features of Gateway(Ratelimiting, Whitelisting, Caching, Logging etc). Also it aggregates all subgraphs and exposes it as single unified api
+
+
+
