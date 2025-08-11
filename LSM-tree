@@ -1,0 +1,43 @@
+LSM tree + sstable
+
+By default write heavy table comes with LSM tree indexing.. we will not create index inbetween so that we can have only one page. not 1 page for index and 1 for table
+
+1. Index creation (initial setup)
+Memtable: In-memory data structure (often a balanced tree like a Red-Black Tree or skip list, sometimes a trie for special workloads).
+
+Empty SSTables: None exist initially — SSTables come after the first flush.
+
+2. Write Path (insert/update)
+WAL (Write Ahead Log)
+
+Every mutation is appended to a WAL on disk before it’s applied to the memtable.
+
+This ensures durability — if the process crashes, the memtable can be rebuilt from the WAL.
+
+Memtable update
+
+Data is inserted into the in-memory memtable in sorted order (tree structure).
+
+In-memory operations are fast.
+
+Memtable flush → SSTable
+
+When memtable reaches a size limit (e.g., 64 MB), it’s frozen (immutable) and flushed to disk as a new SSTable (sorted, immutable file).
+
+The WAL for that memtable is also discarded once the flush succeeds.
+
+3. Multiple SSTables accumulate
+Writes never modify an SSTable — they only create new SSTables.
+
+This keeps writes sequential (fast) but means multiple SSTables can contain versions of the same key.
+
+4. Compaction
+Runs in the background.
+
+Reads multiple SSTables, merges them (sorted using two-pointer merge), discards deleted/overwritten entries, and writes fewer, larger SSTables.
+
+Benefits:
+
+Reduces read amplification (fewer files to check).
+
+Removes stale/deleted data.
