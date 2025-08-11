@@ -1,0 +1,11 @@
+B+ tree - Heavy read
+LSM tree - Heavy write
+
+On read
+LSM need to go through memtable then to all sstables to find the data
+B+ will transverse and find pageId the goes to table page
+
+On write
+b+ need to transverse in same way(Random I/o) and writes in table page
+LSM updates memtable(small) then creates new sstable file sequentually
+    
