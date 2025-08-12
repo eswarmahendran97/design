@@ -34,6 +34,9 @@ This keeps writes sequential (fast) but means multiple SSTables can contain vers
 4. Compaction
 Runs in the background.
 
+5. Update
+old value marking as tombstoned.
+
 Reads multiple SSTables, merges them (sorted using two-pointer merge), discards deleted/overwritten entries, and writes fewer, larger SSTables.
 
 Benefits:
