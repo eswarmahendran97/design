@@ -8,4 +8,9 @@ B+ will transverse and find pageId the goes to table page
 On write
 b+ need to transverse in same way(Random I/o) and writes in table page
 LSM updates memtable(small) then creates new sstable file sequentually
-    
+
+On update
+b+ need to transverse in same way(Random I/o) and updates in table page
+LSM creates new file and mark old one as tombstoned(so processing will be more while read). Actual removal happens during compaction later.
+
+
