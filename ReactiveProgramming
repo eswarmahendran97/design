@@ -27,6 +27,13 @@ This cycle continues, with the OS switching between processes as needed.
 
 Schedulers are vital in managing context switching by determining when and how tasks run, the allocation of CPU resources, and the handling of thread pools.
 
+reactive programming uses poll()?
+No, They use non-blocking APIs backed by the OS (epoll, select, etc.).
+
+How the thread is notified? They should be another thread looking for it and notify right? So its blocking right?
+Application thread delegates the task and immediately becomes free to handle other work. 
+The "blocking" that occurs happens on a separate, dedicated thread pool managed by the framework, not on your main application thread.
+If the application thread is in wait state (normal programming) it use cpu resourse.
 
 Schedulers:
 Most of the reactors operators are Concurrent agnostics. Means it can either follow single thread or multiple threads which will be decided by schedulers
