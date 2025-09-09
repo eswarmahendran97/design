@@ -44,7 +44,7 @@ Objects must be converted into a common serialized format (like JSON or Protobuf
 ### HTTP/2
 
 **HTTP/2 Advantages:**
-1. **Multiplexing** - avoids head-of-line blocking (in browser you can make only max of 6 requests to a domain at a time)
+1. **Multiplexing** - avoids head-of-line blocking (in http1.1 you can make only max of 6 requests to a domain at a time)
 2. **Binary framing** - whole request is in binary format so no need extra transformation
 3. **Full-duplex streaming** - request and response in same channel
 4. **H Pack** - Header compression
