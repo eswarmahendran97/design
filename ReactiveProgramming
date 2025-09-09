@@ -35,6 +35,26 @@ Application thread delegates the task and immediately becomes free to handle oth
 The "blocking" that occurs happens on a separate, dedicated thread pool managed by the framework, not on your main application thread.
 If the application thread is in wait state (normal programming) it use cpu resourse.
 
+Eg:
+Time 1: [App Thread] Makes HTTP request
+        [I/O Thread] Registers request with selector, continues while loop
+
+Time 2: [App Thread] Processes other business logic  
+        [I/O Thread] while loop
+
+Time 3: [App Thread] Still doing other work
+        [I/O Thread] while loop
+
+Time 4: [App Thread] Handling different requests
+        [I/O Thread] OS says "data ready!" → selector.select() returns
+
+Time 5: [App Thread] Maybe doing something else entirely
+        [I/O Thread] Reads data → calls sink.next() → triggers onNext()
+
+Time 6: [App Thread] onNext() callback executes (or scheduled)
+        [I/O Thread] while loop
+
+
 Schedulers:
 Most of the reactors operators are Concurrent agnostics. Means it can either follow single thread or multiple threads which will be decided by schedulers
 
