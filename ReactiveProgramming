@@ -55,6 +55,36 @@ Time 6: [App Thread] onNext() callback executes (or scheduled)
         [I/O Thread] while loop
 
 
+When ever some i/o opeartion is happening, Under the hood, WebFlux uses Reactor Netty. Netty uses I/O thread for those
+I/O make use of java NIO. Java NIO uses Selector API which calls epoll(), kqueue(), IOCP()
+┌─────────────────────────────────────────────────────────────────┐
+│                 YOUR APPLICATION CODE                           │
+│  Flux<String> response = webClient.get("/api")...               │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────┴───────────────────────────────────────────┐
+│                REACTIVE LIBRARY                                 │
+│  • Spring WebFlux                                               │                                                     │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────┴───────────────────────────────────────────┐
+│                    NETTY (I/O Layer)                            │
+│  • Java NIO                                                     │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────┴───────────────────────────────────────────┐
+│                      JAVA NIO                                   │
+│  • Selector API                                                 │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────┴───────────────────────────────────────────┐
+│                 OPERATING SYSTEM                                │
+│  • epoll() (Linux)                                              │
+│  • kqueue() (macOS)                                             │
+│  • IOCP (Windows)                                               │
+└─────────────────────────────────────────────────────────────────┘
+
+
 Schedulers:
 Most of the reactors operators are Concurrent agnostics. Means it can either follow single thread or multiple threads which will be decided by schedulers
 
