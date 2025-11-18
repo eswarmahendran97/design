@@ -69,3 +69,19 @@ In mTLS, service needs to have both keystore and truststore.
 Client: keystore + truststore (prove identity + verify server)
 Server: keystore + truststore (prove identity + verify client)
 ```
+
+## why client need to validate server
+```
+You type: realbank.com
+
+Attacker controls DNS:
+DNS returns WRONG IP: 198.51.100.66 (attacker's server - you might be using his wifi or router)
+
+You connect to: 198.51.100.66
+Attacker's server tries to respond
+
+Client checks certificate:
+❌ Attacker doesn't have valid certificate for realbank.com
+❌ OR has certificate for different domain
+→ Browser shows warning: "Connection not secure"
+````
